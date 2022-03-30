@@ -1,0 +1,181 @@
+units:
+  kx: cx
+  ky: cy
+  px: 2
+  py: px
+
+points:    
+  key:
+    footprints:
+      choc_hotswap:
+        type: choc
+        params:
+          hotswap: true
+          reverse: true
+          keycaps: true
+        nets:
+          # from: P1
+          # to: P2
+          from: =colrow
+          to: =column_net
+  zones:
+    matrix:
+      key:
+        padding: 1 ky
+      columns:
+        pinky:
+          key:
+            column_net: P20
+        ring:
+          stagger: 0.7 ky
+          spread: kx
+          key:
+            column_net: P19
+        middle:
+          stagger: 0.4 ky
+          spread: kx
+          key:
+            column_net: P18
+        index:
+          stagger: -0.4 ky
+          spread: kx
+          key:
+            column_net: P15
+        inner:
+          stagger: -0.2 ky
+          spread: kx
+          key:
+            column_net: P14
+      rows:
+        bottom:
+          row_net: P6
+        home:
+          row_net: P5
+        top:
+          row_net: P4
+    thumb:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-1.5 kx, -0.92 ky]
+      columns:
+        near:
+          key:
+            column_net: P18
+        home:
+          spread: 0 kx
+          rotate: -13.5
+          origin: [0 kx, -5 ky]
+          key:
+            column_net: P15
+        far:
+          spread: 0 kx
+          rotate: -13.5
+          origin: [0 kx, -5 ky]
+          key:
+            column_net: P14
+      rows:
+        thumb_row:
+          row_net: P7
+          
+outlines:
+  exports:
+    raw:
+      - type: keys 
+        side: left
+        size: [kx + px, ky + py]
+        corner: px
+    controller_area:
+      # The coontroler itself is about 18mm by 33mm
+      main:
+        type: rectangle
+        anchor:
+          ref: matrix_inner_top
+          shift: [0.5 kx + 0.5px - 2*px -1.8, -67 + 0.5 ky + 0.5 py]
+        size: [16 + 2*px, 67]
+        corner: px
+    bottom_fill_1:
+      - type: rectangle
+        anchor:
+          ref: matrix_pinky_bottom
+          shift: [-0.5kx - 0.5px, -.5ky-0.5py]
+        size: [5 kx, 3ky+py]
+        corner: px
+    thumb_fill_1:
+      - type: rectangle
+        anchor:
+          ref: thumb_near_thumb_row
+          shift: [0, -0.5 ky]
+          rotate: -6.75
+        size: [1 kx, 1ky]
+    thumb_fill_2:
+      - type: rectangle
+        anchor:
+          ref: thumb_home_thumb_row
+          shift: [0, -0.5 ky]
+          rotate: -6.75
+        size: [1 kx, 1ky]
+    switches:
+      main:
+        type: keys
+        side: left
+        size: 14
+        bound: false
+    keycaps:
+      main:
+        type: keys
+        side: left
+        size: [kx, ky]
+        bound: false
+        corner: 1
+    base_outline:
+      main:
+        type: outline
+        name: raw
+      controller:
+        type: outline
+        name: controller_area
+        #operation: stack
+      fill:
+        type: outline
+        name: bottom_fill_1
+        #operation: stack
+      thumb_fill:
+        type: outline
+        name: thumb_fill_1
+        #operation: stack
+      thumb_fill_two:
+        type: outline
+        name: thumb_fill_2
+        #operation: stack
+    pcb:
+      main:
+        type: outline
+        name: base_outline
+
+pcbs:
+  board:
+    outlines:
+      edge:
+        outline: pcb
+        layer: Edge.Cuts
+#    footprints:
+#      mcu_l:
+#        type: promicro
+#        params:
+#          orientation: up
+#          batteryPins: true
+#        anchor:
+#          ref:
+#            - matrix_inner_top
+#          shift: [20, -11]
+#          rotate: 270
+#      mcu_r:
+#        type: promicro
+#        params:
+#          orientation: down
+#          batteryPins: true
+#        anchor:
+#          ref:
+#            - matrix_inner_top
+#          shift: [22.5, -12.25]
+#          rotate: 270

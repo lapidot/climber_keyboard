@@ -1,1 +1,4 @@
-# climber_keyboard
+# Climber keyboard
+
+A custom ergonomic keyboard designed with #ergogen.
+
