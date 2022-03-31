@@ -3,7 +3,15 @@
   "version": "0.0.1",
   "description": "A custom ergonomic keyboard designed with #ergogen.",
   "scripts": {
-    "build": "ergogen climber.yaml -o build -d --clean"
+    "build": "ergogen climber.yaml -o build -d",
+    "watch": "npm-watch build"
+  },
+  "watch": {
+    "build": {
+      "patterns": ["."],
+      "extensions": "yaml",
+      "ignore": "build"
+    }
   },
   "repository": {
     "type": "git",
@@ -13,7 +21,8 @@
     "url": "https://github.com/yohcop/climber_keyboard/issues"
   },
   "homepage": "https://github.com/yohcop/climber_keyboard#readme",
-  "dev_dependencies": {
-    "ergogen": "^3.1.2"
+  "devDependencies": {
+    "ergogen": "^3.1.2",
+    "npm-watch": "*"
   }
 }
