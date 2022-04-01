@@ -14,22 +14,20 @@ points:
           reverse: false
           keycaps: false
         nets:
-          # from: P1
-          # to: P2
           from: =colrow
           to: =column_net
-    diode:
-      type: diode
-      nets:
-        # from: P3
-        # to: P4
-        from: =colrow
-        to: =row_net
-      anchor:
-        shift: [0, -5]
+      diode:
+        type: diode
+        nets:
+          from: =colrow
+          to: =row_net
+        anchor:
+          shift: [0, -5]
   zones:
     matrix:
       key:
+        tags:
+          key: true
         padding: 1 ky
       columns:
         pinky:
@@ -66,6 +64,9 @@ points:
       anchor:
         ref: matrix_inner_bottom
         shift: [-1.5 kx, -0.92 ky]
+      key:
+        tags:
+          key: true
       columns:
         near:
           key:
@@ -85,14 +86,43 @@ points:
       rows:
         thumb_row:
           row_net: P7
-
+    encoder:
+      anchor:
+        ref: thumb_near_thumb_row
+        shift: [-0.5kx - 0.5 u, 0]
+      key:
+        tags:
+          enc: true
+        footprints:
+          rotary:
+            type: rotary
+            nets:
+              from: =colrow
+              to: =column_net
+              A: P8
+              B: P9
+              C: GND
+          diode:
+            type: diode
+            nets:
+              from: =colrow
+              to: =row_net
+            anchor:
+              shift: [0, -5]
+      columns:
+        one:
+          key:
+            column_net: P21
+      rows:
+        one:
+          row_net: P8
 outlines:
   exports:
     raw:
       - type: keys
+        tags: ['key']
         side: left
         size: [kx + 2*px, ky + 2*py]
-        # corner: px
     switches:
       main:
         type: keys
@@ -101,15 +131,16 @@ outlines:
     keycaps:
       main:
         type: keys
+        tags: ['key']
         side: left
         size: [kx, ky]
         corner: 1
     encoder:
-      - type: rectangle
-        anchor:
-          ref: thumb_near_thumb_row
-          shift: [-u -0.5 kx, -0.5ky]
+      - type: keys
+        tags: ['enc']
+        side: left
         size: [u, u]
+        corner: 0.5 u
     trrs:
       - type: rectangle
         anchor:
@@ -227,18 +258,10 @@ pcbs:
           D: ""
         params:
           reverse: true
-      encoder:
-        type: rotary
-        anchor:
-          ref: thumb_near_thumb_row
-          # TODO: Should I use MX spacing here, just to be sure?
-          shift: [-1 u, 0]
-        nets:
-          from: P21
-          to: enc_diode
-          A: P8
-          B: P9
-          C: GND
+      # encoder:
+      #   type: rotary
+      #   anchor:
+      #     ref: encoder_one_one
       reset:
         type: button
         anchor:
