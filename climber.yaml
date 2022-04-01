@@ -4,7 +4,7 @@ units:
   px: 1
   py: px
 
-points:    
+points:
   key:
     footprints:
       choc_hotswap:
@@ -85,13 +85,13 @@ points:
       rows:
         thumb_row:
           row_net: P7
-          
+
 outlines:
   exports:
     raw:
-      - type: keys 
+      - type: keys
         side: left
-        size: [kx + px, ky + py]
+        size: [kx + 2*px, ky + 2*py]
         # corner: px
     switches:
       main:
@@ -104,12 +104,24 @@ outlines:
         side: left
         size: [kx, ky]
         corner: 1
+    encoder:
+      - type: rectangle
+        anchor:
+          ref: thumb_near_thumb_row
+          shift: [-u -0.5 kx, -0.5ky]
+        size: [u, u]
     trrs:
       - type: rectangle
         anchor:
           ref: matrix_inner_top
-          shift: [0.5 kx + 5 + 6 + px, 0.5ky - 33 - 8]
-        size: [12, 6]
+          shift: [0.5 kx + 5 + 18 + 5, 0.5ky - 12]
+        size: [6, 12]
+    reset:
+      - type: rectangle
+        anchor:
+          ref: matrix_inner_top
+          shift: [0.5 kx + 5 + 18 + 5, 0.5ky - 12 - 6 - 5]
+        size: [6, 6]
     controller:
       # The coontroler itself is about 18mm by 33mm
       - type: rectangle
@@ -124,39 +136,28 @@ outlines:
       - type: rectangle
         anchor:
           ref: matrix_inner_top
-          shift: [0, -67 + 0.5 ky + 0.5 py]
+          shift: [0, -50 + 0.5 ky + py]
         # Width is
         #    the space between the controller and keys
         # + the controller itself
         # + half a key
         # + px
-        size: [5 + 18 + 0.5*kx + px, 67]
-        corner: px
-    bottom_fill_1:
+        size: [5 + 18 + 5 + 6 + 0.5*kx + px, 50]
+    bottom_fill:
       - type: rectangle
         anchor:
           ref: matrix_pinky_bottom
-          shift: [-0.5kx - 0.5px, -.5ky-0.5py]
-        size: [5 kx, 3ky+py]
-        # corner: px
-    thumb_fill_1:
+          shift: [-0.5kx - px, -0.5ky-py]
+        size: [5 kx + 2px, 3ky+py]
       - type: rectangle
         anchor:
           ref: thumb_near_thumb_row
-          shift: [0, -0.25 ky]
-          rotate: -6.75
-        size: [1 kx, 1ky]
-      - type: rectangle
-        anchor:
-          ref: thumb_home_thumb_row
-          shift: [0, -0.25 ky]
-          rotate: -6.75
-        size: [1 kx, 1ky]
+          shift: [-u - 0.5kx - px, -0.5ky-py]
+        size: [u + 2.5 kx + 2*px, ky]
 
     base_square:
       - raw
-      - bottom_fill_1
-      - thumb_fill_1
+      - bottom_fill
       - controller_area
     base_outline:
       - type: outline
@@ -164,10 +165,15 @@ outlines:
         fillet: 1
 
     preview:
+      # - base_square
       - base_outline
       - ^keycaps
       - ^controller
+      - ^encoder
+      # - ^controller_area
       - ^trrs
+      - ^reset
+      # - ^bottom_fill
     pcb:
       - base_outline
     top_plate:
@@ -210,7 +216,7 @@ pcbs:
         type: scrollwheel
         anchor:
           ref: matrix_inner_bottom
-          shift: [ -3, -20 ]
+          shift: [-3, -20]
           rotate: -90
         nets:
           from: P21
@@ -218,7 +224,7 @@ pcbs:
           A: P8
           B: P9
           C: GND
-          D: ''
+          D: ""
         params:
           reverse: true
       encoder:
@@ -230,7 +236,7 @@ pcbs:
         nets:
           from: P21
           to: enc_diode
-          A: P8 
+          A: P8
           B: P9
           C: GND
       reset:
