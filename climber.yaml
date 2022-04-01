@@ -5,27 +5,26 @@ units:
   py: px
 
 points:
-  key:
-    footprints:
-      choc_hotswap:
-        type: choc
-        params:
-          hotswap: false
-          reverse: false
-          keycaps: false
-        nets:
-          from: =colrow
-          to: =column_net
-      diode:
-        type: diode
-        nets:
-          from: =colrow
-          to: =row_net
-        anchor:
-          shift: [0, -5]
   zones:
     matrix:
       key:
+        footprints:
+          choc_hotswap:
+            type: choc
+            params:
+              hotswap: false
+              reverse: false
+              keycaps: false
+            nets:
+              from: =colrow
+              to: =column_net
+          diode:
+            type: diode
+            nets:
+              from: =colrow
+              to: =row_net
+            anchor:
+              shift: [0, -5]
         tags:
           key: true
         padding: 1 ky
@@ -65,6 +64,23 @@ points:
         ref: matrix_inner_bottom
         shift: [-1.5 kx, -0.92 ky]
       key:
+        footprints:
+          choc_hotswap:
+            type: choc
+            params:
+              hotswap: false
+              reverse: false
+              keycaps: false
+            nets:
+              from: =colrow
+              to: =column_net
+          diode:
+            type: diode
+            nets:
+              from: =colrow
+              to: =row_net
+            anchor:
+              shift: [0, -5]
         tags:
           key: true
       columns:
@@ -91,31 +107,48 @@ points:
         ref: thumb_near_thumb_row
         shift: [-0.5kx - 0.5 u, 0]
       key:
+        name: encoder
         tags:
           enc: true
         footprints:
           rotary:
             type: rotary
             nets:
-              from: =colrow
-              to: =column_net
+              from: enc_diode
+              to: P21
               A: P8
               B: P9
               C: GND
           diode:
             type: diode
             nets:
-              from: =colrow
-              to: =row_net
+              from: enc_diode
+              to: P8
+    scrollwheel:
+      anchor:
+        ref: thumb_far_thumb_row
+        shift: [0, 0.5ky + 0.5u]
+      key:
+        name: scrollwheel
+        tags:
+          scroll: true
+        footprints:
+          scrollwheel:
+            type: scrollwheel
+            nets:
+              from: roll_diode
+              to: P21
+              A: P8
+              B: P9
+              C: GND
+              D: ""
+          diode:
+            type: diode
+            nets:
+              from: roll_diode
+              to: P8
             anchor:
               shift: [0, -5]
-      columns:
-        one:
-          key:
-            column_net: P21
-      rows:
-        one:
-          row_net: P8
 outlines:
   exports:
     raw:
@@ -124,13 +157,20 @@ outlines:
         side: left
         size: [kx + 2*px, ky + 2*py]
     switches:
-      main:
-        type: keys
+      - type: keys
+        tags: ['key']
         side: left
         size: 14
+      - type: keys
+        tags: ['enc']
+        side: left
+        size: 15
+      - type: keys
+        tags: ['scroll']
+        side: left
+        size: 15
     keycaps:
-      main:
-        type: keys
+      - type: keys
         tags: ['key']
         side: left
         size: [kx, ky]
@@ -141,6 +181,12 @@ outlines:
         side: left
         size: [u, u]
         corner: 0.5 u
+    scrollwheel:
+      - type: keys
+        tags: ['scroll']
+        side: left
+        size: [u, u]
+        corner: 1
     trrs:
       - type: rectangle
         anchor:
@@ -185,6 +231,11 @@ outlines:
           ref: thumb_near_thumb_row
           shift: [-u - 0.5kx - px, -0.5ky-py]
         size: [u + 2.5 kx + 2*px, ky]
+      - type: rectangle
+        anchor:
+          ref: scrollwheel
+          shift: [-0.5kx - px, -0.5ky - py]
+        size: [kx + 2*px, ky + 2*py]
 
     base_square:
       - raw
@@ -198,13 +249,15 @@ outlines:
     preview:
       # - base_square
       - base_outline
-      - ^keycaps
-      - ^controller
-      - ^encoder
+      # - ^keycaps
+      # - ^controller
+      # - ^encoder
+      # - ^scrollwheel
       # - ^controller_area
-      - ^trrs
-      - ^reset
+      # - ^trrs
+      # - ^reset
       # - ^bottom_fill
+      - ^switches
     pcb:
       - base_outline
     top_plate:
@@ -243,25 +296,6 @@ pcbs:
             - matrix_inner_top
           shift: [20, -11]
           rotate: 270
-      scrollwheel:
-        type: scrollwheel
-        anchor:
-          ref: matrix_inner_bottom
-          shift: [-3, -20]
-          rotate: -90
-        nets:
-          from: P21
-          to: enc_diode
-          A: P8
-          B: P9
-          C: GND
-          D: ""
-        params:
-          reverse: true
-      # encoder:
-      #   type: rotary
-      #   anchor:
-      #     ref: encoder_one_one
       reset:
         type: button
         anchor:
