@@ -2,3 +2,5 @@
 
 * [ ] Pins assignment match a known board as much as possible
 * [ ] Size of the scrollwheel
+* [ ] Move resistor pads to the bottom
+* [ ] Not a good spot for the reset button
