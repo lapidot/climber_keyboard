@@ -149,6 +149,7 @@ points:
               to: P8
             anchor:
               shift: [0, -5]
+        
 outlines:
   exports:
     raw:
@@ -191,13 +192,13 @@ outlines:
       - type: rectangle
         anchor:
           ref: matrix_inner_top
-          shift: [0.5 kx + 5 + 18 + 5, 0.5ky - 12]
-        size: [6, 12]
+          shift: [0.5 kx + 5 + 18 - 6, 0.5ky - 33 - 2 - 6 ]
+        size: [12, 6]
     reset:
       - type: rectangle
         anchor:
           ref: matrix_inner_top
-          shift: [0.5 kx + 5 + 18 + 5, 0.5ky - 12 - 6 - 5]
+          shift: [0.5 kx + 5 + 18 + 3, 0.5ky - 33]
         size: [6, 6]
     controller:
       # The coontroler itself is about 18mm by 33mm
@@ -219,7 +220,7 @@ outlines:
         # + the controller itself
         # + half a key
         # + px
-        size: [5 + 18 + 5 + 6 + 0.5*kx + px, 50]
+        size: [5 + 18 + 3 + 6 + 0.5*kx + px, 50]
     bottom_fill:
       - type: rectangle
         anchor:
@@ -245,24 +246,32 @@ outlines:
       - type: outline
         name: base_square
         fillet: 1
+    pcb:
+      - base_outline
+    top_plate:
+      - type: outline
+        name: raw
+        fillet: 1
+      - type: outline
+        name: bottom_fill
+        fillet: 1
+      - -switches
+    bottom_plate_1:
+      - raw
+
 
     preview:
       # - base_square
       - base_outline
-      # - ^keycaps
-      # - ^controller
-      # - ^encoder
-      # - ^scrollwheel
+      - ^keycaps
+      - ^encoder
+      - ^scrollwheel
+      - ^controller
       # - ^controller_area
-      # - ^trrs
-      # - ^reset
+      - ^trrs
+      - ^reset
       # - ^bottom_fill
-      - ^switches
-    pcb:
-      - base_outline
-    top_plate:
-      - base_outline
-      - -switches
+      # - ^switches
 
 pcbs:
   board:
