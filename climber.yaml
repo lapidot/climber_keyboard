@@ -237,6 +237,11 @@ outlines:
           ref: scrollwheel
           shift: [-0.5kx - px, -0.5ky - py]
         size: [kx + 2*px, ky + 2*py]
+      - type: rectangle
+        anchor:
+          ref: scrollwheel
+          shift: [-0.5kx - px - kx, -0.5ky-py]
+        size: [kx + 2*px, ky+2*py]
 
     base_square:
       - raw
@@ -263,6 +268,7 @@ outlines:
     preview:
       # - base_square
       - base_outline
+      # - ^top_plate
       - ^keycaps
       - ^encoder
       - ^scrollwheel
