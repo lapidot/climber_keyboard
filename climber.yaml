@@ -12,7 +12,7 @@ points:
           choc_hotswap:
             type: choc
             params:
-              hotswap: false
+              hotswap: true
               reverse: false
               keycaps: false
             nets:
@@ -25,6 +25,8 @@ points:
               to: =row_net
             anchor:
               shift: [0, -5]
+            params:
+              reverse: true
         tags:
           key: true
         padding: 1 ky
@@ -81,6 +83,8 @@ points:
               to: =row_net
             anchor:
               shift: [0, -5]
+            params:
+              reverse: true
         tags:
           key: true
       columns:
@@ -124,6 +128,8 @@ points:
             nets:
               from: enc_diode
               to: P8
+            params:
+              reverse: true
     scrollwheel:
       anchor:
         ref: thumb_far_thumb_row
@@ -151,50 +157,52 @@ points:
               to: P8
             anchor:
               shift: [0, -5]
-        
+            params:
+              reverse: true
+
 outlines:
   exports:
     raw:
       - type: keys
-        tags: ['key']
+        tags: ["key"]
         side: left
         size: [kx + 2*px, ky + 2*py]
     switches:
       - type: keys
-        tags: ['key']
+        tags: ["key"]
         side: left
         size: 14
       - type: keys
-        tags: ['enc']
+        tags: ["enc"]
         side: left
-        size: 15
+        size: [18, 14]
       - type: keys
-        tags: ['scroll']
+        tags: ["scroll"]
         side: left
-        size: 15
+        size: [17, 15]
     keycaps:
       - type: keys
-        tags: ['key']
+        tags: ["key"]
         side: left
         size: [kx, ky]
         corner: 1
-    encoder:
+    encoder: # This is just the drawing for debugging. Hole is above in switches.
       - type: keys
-        tags: ['enc']
+        tags: ["enc"]
         side: left
-        size: [u, u]
-        corner: 0.5 u
+        size: [19, 19]
+        corner: 9.5
     scrollwheel:
       - type: keys
-        tags: ['scroll']
+        tags: ["scroll"]
         side: left
-        size: [u, u]
+        size: [17, 14]
         corner: 1
     trrs:
       - type: rectangle
         anchor:
           ref: matrix_inner_top
-          shift: [0.5 kx + 5 + 18 - 12 + px, 0.5ky - 33 - 1 - 6 ]
+          shift: [0.5 kx + 5 + 18 - 12 + px, 0.5ky - 33 - 1 - 6]
         size: [12, 6]
     reset:
       - type: rectangle
@@ -241,7 +249,7 @@ outlines:
       - type: rectangle
         anchor:
           ref: thumb_near_thumb_row
-          shift: [-u - 0.5kx - px, -0.5ky-py]
+          shift: [-0.5kx -px -0.5u -10, -0.5ky-py]
         size: [u + 2.5 kx + 2*px, ky]
       - type: rectangle
         anchor:
@@ -261,6 +269,9 @@ outlines:
     base:
       - key_area
       - controller_area
+    cover:
+      - controller_area
+      - -key_area
 
     top_plate:
       - type: outline
@@ -271,7 +282,7 @@ outlines:
       - type: outline
         name: base
         fillet: 1
-    bottom_plate_1:
+    bottom_plate:
       - type: outline
         name: base
         fillet: 1
@@ -286,8 +297,9 @@ outlines:
         name: base
         fillet: 1
     ic_cover:
-      - controller_area
-      - -key_area
+      - type: outline
+        name: cover
+        fillet: 1
 
     preview:
       - pcb
@@ -317,7 +329,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [30, 2]
+          shift: [30, 3]
           rotate: 270
         params:
           reverse: true
