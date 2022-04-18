@@ -2,3 +2,5 @@
 vscode:
   extensions:
     - ritwickdey.LiveServer
+    - roipoussiere.cadquery
+    - ms-python.python
