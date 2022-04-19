@@ -6,27 +6,17 @@ thickness = 10.0
 diameter = 22.0
 padding = 12.0
 
-# make the base
-# result = cq.Workplane("XY").box(height, width, thickness)\
-#     .faces(">Z").workplane().hole(diameter)\
-#     .faces(">Z").workplane() \
-#     .rect(height - padding, width - padding, forConstruction=True)\
-#     .vertices()\
-#     .cboreHole(2.4, 4.4, 2.1)\
-#     .edges("|Z").fillet(2.0)
-
-# result = cq.Workplane("XY")
-
 result = (
-   cq.Sketch()
-   .trapezoid(4,3,90)
-   .vertices()
-   .circle(.5, mode='s')
-   .reset()
-   .vertices()
-   .fillet(.25)
-   .reset()
-   .rarray(.6,1,5,1).slot(1.5,0.4, mode='s', angle=90)
+    cq.Sketch()
+    .trapezoid(100, 80, 90, tag='base')
+    .vertices()
+    .fillet(2)
+    .reset()
+    .center(-50,0)
+    .rarray(18, 17, 5, 1)
+    .rarray(18, 17, 1, 3)
+    .rect(14, 14, mode='s', tag='key')
+    .reset()
 )
 
 # Render the solid
